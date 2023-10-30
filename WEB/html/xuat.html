@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý hiệu thuốc</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <style>
+        /* CSS cho khung đăng nhập */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .popup-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Định dạng trường nhập và nút trong khung đăng nhập */
+        .popup-content input[type="text"],
+        .popup-content input[type="number"],
+        .popup-content input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .popup-content button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .popup-content button:last-child {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Hàng 1: Chứa ảnh -->
+        <img src="https://img.lovepik.com/photo/50096/1855.jpg_wh860.jpg" alt="Hình ảnh bất kỳ" width="200">
+        
+        <!-- Hàng 2: Chứa các nút bấm -->
+        <div class="header">
+            <div class="button-container">
+                <ul id="nav">
+                    <li><a href="./scthuoc.html">Tra cứu thuốc</a></li>
+                    <li><a href="./scbenh.html">Tra cứu bệnh</a></li>
+                    <li><a href="./nhap.html">Nhập hàng</a></li>
+                    <li><a href="#">Xuất hàng</a></li>
+                    <li><a href="./lichsu.html">Lịch sử</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Hàng 3: Chứa ô tìm kiếm -->
+        <div class="search-box">
+            <input type="text" class="search-input" placeholder="Tìm kiếm theo tên thuốc hoặc triệu chứng...">
+            <button class="search-button">Tìm kiếm</button>
+            <li><button class="search-button" id="xuathang-button">Xuất hàng</button></li>
+            <!-- <li><button id="xuathang-button">Xuất hàng</button></li> -->
+            <!-- <button class="search-button" id="xuathangButton">Xuất hàng</button> -->
+        </div>
+
+        <!-- Hàng 4: Chứa bảng dữ liệu -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Tên thuốc</th>
+                    <th>Hãng</th>
+                    <th>Công dụng chỉ định</th>
+                    <th>Số lượng</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Panadol</td>
+                    <td>ABC Pharma</td>
+                    <td>Giảm đau, hạ sốt</td>
+                    <td>1000</td>
+                </tr>
+                <tr>
+                    <td>Amoxicillin</td>
+                    <td>XYZ Pharma</td>
+                    <td>Kháng sinh</td>
+                    <td>500</td>
+                </tr>
+                <!-- Thêm các dòng dữ liệu khác tại đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Khung đăng nhập -->
+    <div id="xuathang-popup" class="popup">
+        <div class="popup-content">
+            <h2>Nhập thông tin hàng xuất</h2>
+            <form>
+                <input type="text" placeholder="Tên sản phẩm">
+                <input type="number" placeholder="Số lượng">
+                <input type="date" placeholder="Ngày xuất">
+                <button type="submit">Xác nhận</button>
+                <button type="button" onclick="closePopup()">Hủy</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript
+        function openPopup() {
+            var popup = document.getElementById("xuathang-popup");
+            popup.style.display = "block";
+        }
+
+        function closePopup() {
+            var popup = document.getElementById("xuathang-popup");
+            popup.style.display = "none";
+        }
+
+        // Gán sự kiện click cho nút "Xuất hàng"
+        var xuathangButton = document.getElementById("xuathang-button");
+        xuathangButton.addEventListener("click", openPopup);
+    </script>
+</body>
+</html>
