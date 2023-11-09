@@ -1,0 +1,2309 @@
+<!DOCTYPE html>
+
+
+<html ng-app="BaseYngApp" ng-controller="BaseAuthController as baseAuth">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:site_name" content="Thông Tin Thuốc" />
+    <meta property="fb:app_id" content="672418659559796" />
+
+    <meta name="description" content="Kiến thức chuyên gia đến mọi nhà. Giúp giải quyết công việc nhẹ nhàng - lẹ làng." />
+    <meta property="og:title" content="Thông tin thuốc" />
+    <meta property="og:image" content="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/yduoc_fb_og.png" />
+    <meta property="og:image" content="http://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/yduoc_fb_og.png" />
+
+    <link rel="icon" type="image/png" href="/static/yduoc.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:locale" content="vi_VN" />
+    <link rel="apple-touch-icon" href="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/apple-touch-icon-120x120.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/css/styles-1512250030.css">
+    <script>
+        ! function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+                p = /^http:/.test(d.location) ? 'http' : 'https';
+            if (!d.getElementById(id)) {
+                js = d.createElement(s);
+                js.id = id;
+                js.src = p + '://platform.twitter.com/widgets.js';
+                fjs.parentNode.insertBefore(js, fjs);
+            }
+        }(document, 'script', 'twitter-wjs');
+    </script>
+
+
+    <style>
+        .counter {
+            font-size: 1.2em;
+            color: #933;
+        }
+
+        .tile.contained .thumbnail img {
+            max-height: 180px;
+        }
+
+        .ng-cloak {
+            opacity: 0;
+            transition: all linear 0.5s;
+        }
+    </style>
+
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js"></script>
+    <![endif]-->
+
+    <title> Thông tin thuốc</title>
+</head>
+
+<body style="padding-bottom: 80px; height: auto;">
+    <div>
+        <script>
+            window.fbAsyncInit = function() {
+                FB.init({
+                    appId: '672418659559796',
+                    xfbml: true,
+                    version: 'v2.4'
+                });
+            };
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) {
+                    return;
+                }
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/vi_VN/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <div class="page-header" style="padding-top: 0;">
+
+
+            <nav class="navbar navbar-default main-heading" style="margin-bottom: 0;">
+                <div class="container" style="position: relative;">
+                    <div class="navbar-header">
+
+                        <a href="#" class="hidden-md hidden-lg hidden-sm" onclick="$('#top-search-wrapper').fadeIn('fast', function(){$(this).find('input').focus()});" style="float: right; position: relative; margin-right: 15px; padding: 0px 0px; margin-top: 8px; margin-bottom: 8px;">
+                <span style="background-color: #666;border-radius: 16px; display: inline-block;"><img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/magnify.png" width="32" height="32" /></span>
+            </a>
+
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+                        <a href="/" style="padding-top: 5px;" class="navbar-brand">
+                <span class="icon yduoc xlarge"></span>
+            </a>
+                    </div>
+
+                    <div class="collapse navbar-collapse navbar-right" id="main-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="/tuong_tac/"><span class="icon nav-interact large"></span><span class="title">Tương tác</span></a>
+                            </li>
+                            <li>
+                                <a href="/giao_duc_benh_nhan/"><span class="icon doctor large"></span><span class="title">Giáo dục <span class="hidden-sm hidden-xs">bệnh nhân</span></span></a>
+                            </li>
+                            <li>
+                                <a href="/tin_tuc/"><span class="icon nav-news large"></span><span class="title hidden-sm">Tin tức</span></a>
+                            </li>
+                            <li>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="icon nav-hat large"></span><span class="title hidden-sm">Đào tạo</span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/giao_duc/"><span class="icon presentation"></span> Bài giảng</a></li>
+                                    <li><a href="/thuc-tap/"><span class="icon student"></span> Thực tập</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="icon nav-book large"></span><span class="title hidden-sm">Tra cứu</span> <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="/search.html?entities=unii,bietduoc,duoclieu"><span class="icon search-gray">Tất cả</span></a></li>
+                                    <li><a href="/biet_duoc/"><span class="icon pills">Biệt dược</span></a></li>
+                                    <li><a href="/hoat_chat/"><span class="icon test-tube">Hoạt chất</span></a></li>
+                                    <li><a href="/duoc_lieu/"><span class="icon leaf">Dược Liệu</span></a></li>
+
+
+                                    <li ng-if="me.authenticated"><a href="/don-thuoc/"><span class="icon prescription">Đơn thuốc</span></a></li>
+                                    <!--<a href="#" onclick="showPrescription()"><span class="icon prescription"></span><span class="title">Đơn thuốc</span></a>-->
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <img ng-src="{{ me.avatar }}" ng-style="{backgroundColor: me.authenticated ? '#aaa' : 'rgba(214,214,214,0.4)'}" style="max-width: 32px;max-height: 32px;" class="avatar clickable" />
+                        <img ng-show="me.authenticating" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/ajax-loader-bar.gif" style="width: 8px; position: absolute; left: 50%; margin-left:-4px; top: 50%;" />
+                        <span class="hidden-sm hidden-md hidden-lg title" ng-bind="say_hello()"></span>
+                    </a>
+
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-show="me.authenticated" class="hidden-xs">
+                                        <p class="navbar-text" ng-bind="say_hello()"></p>
+                                    </li>
+                                    <li ng-show="me.authenticated"><a href="/profile"><span class="icon card"></span>Thông tin cá nhân</a></li>
+                                    <li ng-show="me.authenticated"><a ng-href="/ho-so/{{me.patient_id}}"><span class="icon health-record"></span>Hồ sơ y tế</a></li>
+                                    <li ng-show="me.authenticated && me.is_writer">
+                                        <a href='/viet_bai'>
+                                            <div class='item'><span class='icon document med' style='margin-left: 4px;margin-right: 2px;'></span>Viết bài</div>
+                                        </a>
+                                    </li>
+                                    <li ng-show="me.authenticated && (me.is_editor || me.is_reviewer || me.is_superuser)"><a href="/duyet_bai">Duyệt bài</a></li>
+                                    <li ng-show="!me.authenticating && !me.authenticated"><a href="#" ng-click="log_me_in()"><span class="icon lock">Đăng nhập</span></a></li>
+                                    <li ng-show="!me.authenticating && !me.authenticated"><a href="/register"><span class="icon card">Đăng ký</span></a></li>
+                                    <li ng-show="me.authenticated && (me.is_staff || me.is_superuser)"><a href="/quan-tri"><span class="icon yduoc"></span>Quản trị</a></li>
+
+                                    <li style="padding-left: 0px;" ng-show="!me.authenticating && !me.authenticated">
+                                        <a href="/login/facebook/" style="padding: 0px; margin-left: -1px;">
+                                <span class="button medium full-width" style="background-color: #395999; padding-top: 4px; border-radius: 0;">
+                                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"width="32px" height="32px" viewBox="273 363 66 66" enable-background="new 273 363 66 66" xml:space="preserve"><path fill="#FFFFFF" d="M298.758,381.106v5.587H293V396h5.758v27h11.529v-27.002h7.695l1.018-9.305h-8.713l0.014-4.656c0-2.429,0.24-3.729,3.839-3.729h4.807V369h-7.692C302.012,369,298.758,373.517,298.758,381.106z"/></svg>
+                                </span>
+                            </a>
+                                    </li>
+                                    <li style="padding-left: 0px;" ng-show="!me.authenticating && !me.authenticated">
+                                        <a href="/login/google-oauth2/" style="padding: 0px; margin-left: -1px;">
+                                <span class="button medium full-width" style="background-color: #d94232;padding-top: 4px; border-radius: 0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 512 512" fill="#000000"><path d="M 394.767,32.00c0.00,0.00-100.478,0.00-133.97,0.00c-60.061,0.00-116.585,45.503-116.585,98.211c0.00,53.863, 40.941,97.333, 102.044,97.333 c 4.249,0.00, 8.378-0.085, 12.42-0.376c-3.964,7.593-6.80,16.144-6.80,25.021c0.00,14.969, 8.052,27.105, 18.234,37.012 c-7.693,0.00-15.121,0.224-23.226,0.224c-74.391-0.001-131.65,47.38-131.65,96.511c0.00,48.389, 62.771,78.656, 137.167,78.656 c 84.812,0.00, 131.653-48.122, 131.653-96.514c0.00-38.801-11.448-62.036-46.843-87.067c-12.108-8.571-35.266-29.418-35.266-41.672 c0.00-14.36, 4.098-21.434, 25.714-38.323c 22.156-17.312, 37.837-41.651, 37.837-69.958c0.00-33.703-15.011-66.549-43.187-77.386l 42.478,0.00 L 394.767,32.00z M 347.974,359.729c 1.063,4.486, 1.642,9.104, 1.642,13.814c0.00,39.10-25.195,69.655-97.487,69.655 c-51.421,0.00-88.558-32.552-88.558-71.65c0.00-38.321, 46.063-70.222, 97.482-69.666c 12.00,0.127, 23.184,2.058, 33.334,5.345 C 322.301,326.641, 342.325,337.607, 347.974,359.729z M 265.643,213.888c-34.519-1.032-67.318-38.613-73.276-83.93 c-5.958-45.333, 17.185-80.021, 51.694-78.995C 278.565,52.00, 311.379,88.37, 317.34,133.692 C 323.293,179.022, 300.145,214.921, 265.643,213.888z" fill="#FFFFFF"/></svg>
+                                </span>
+                            </a>
+                                    </li>
+                                    <li style="padding-left: 0px;" ng-show="!me.authenticating && !me.authenticated">
+                                        <a href="/login/twitter/" style="padding: 0px; margin-left: -1px;">
+                                <span class="button medium full-width" style="background-color: #3f9ede; padding-top: 4px; border-radius: 0; ">
+                                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="32px" height="32px" viewBox="273 363 66 66" enable-background="new 273 363 66 66" xml:space="preserve"><path fill="#FFFFFF" d="M333.031,377.671c-3.562,1.271-4.066,1.102-2.303-0.804c1.299-1.356,2.85-3.814,2.85-4.534c0-0.126-0.629,0.084-1.342,0.466c-0.754,0.424-2.434,1.06-3.689,1.439l-2.262,0.723l-2.053-1.4c-1.135-0.762-2.725-1.609-3.562-1.863c-2.139-0.593-5.408-0.509-7.336,0.17c-5.238,1.905-8.547,6.821-8.172,12.201l0.127,2.076l-2.096-0.254c-7.627-0.974-14.291-4.277-19.949-9.83l-2.766-2.754l-0.713,2.034c-1.508,4.534-0.545,9.322,2.6,12.542c1.676,1.78,1.297,2.034-1.594,0.974c-1.006-0.338-1.887-0.592-1.969-0.466c-0.293,0.298,0.711,4.152,1.508,5.678c1.09,2.119,3.309,4.193,5.742,5.424l2.055,0.975l-2.432,0.041c-2.346,0-2.43,0.043-2.178,0.935c0.838,2.756,4.148,5.68,7.836,6.951l2.598,0.889l-2.262,1.355c-3.352,1.952-7.293,3.049-11.232,3.131c-1.889,0.043-3.438,0.213-3.438,0.343c0,0.422,5.115,2.793,8.088,3.729c8.926,2.755,19.531,1.564,27.493-3.137c5.658-3.347,11.312-10,13.955-16.44c1.426-3.432,2.852-9.704,2.852-12.709c0-1.95,0.125-2.204,2.473-4.534c1.383-1.355,2.68-2.838,2.934-3.262C335.211,376.952,335.168,376.952,333.031,377.671z"/></svg></span>
+                            </a>
+                                    </li>
+
+                                    <li ng-show="!me.authenticating && me.authenticated"><a href="" onclick="logout()"><span class="icon lock"></span>Thoát</a></li>
+                                    <li ng-show="me.employers.length > 0">
+                                        <p class='navbar-text'>Doanh nghiệp</p>
+                                    </li>
+                                    <li ng-repeat="e in me.employers">
+                                        <a ng-href="/doanh-nghiep/{{e.id}}/" ng-bind="e.name"></a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                            <li class="hidden-xs">
+                                <a href="#" onclick="$('#top-search-wrapper').fadeIn('fast', function(){$(this).find('input').focus()});"><span style="background-color: #666;border-radius: 16px; display: inline-block;"><img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/magnify.png" width="32" height="32" /></span></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="top-search-wrapper" style="position: absolute; top: 0; left: 0px; right: 0px; bottom: 0; background-color: #fff; display: none;">
+                        <div class="search-wrapper" fire="gotoEntity(this)" style="position: absolute; top: 0; bottom: 0; left: 10px; right:80px; width: auto;">
+                            <span class="search" style="border: none; height: 48px; top: 50%; margin-top: -24px; position: absolute; font-size: 24px; line-height: 36px; padding-top: 6px; font-weight: 300; padding-left: 30px;">
+                    <span class="button category" onclick="openCategoryChoice(this)"></span>
+                            <input type="text" class="text-input" onkeydown="onSearchNavigate(event)" onkeyup="onSearch(this)" placeholder='Tìm kiếm ...' />
+                            <span class="button search" onclick="$(this).closest('.page-header').toggleClass('searching'); if ($(this).closest('.page-header').hasClass('searching')) {$(this).siblings('input').focus();}"></span>
+                            </span>
+                            <!--
+                -->
+                            <div class="category-select" style="top: 100%; border-width: 1px; border-color: #888; border-top-color: #aaa;">
+                                <div rel="all" onclick="changeSearchCat(this)"><span class="item all">All</span></div>
+                                <div rel="unii" onclick="changeSearchCat(this)"><span class="item hoatchat">Hoạt Chất</span> </div>
+
+                                <div rel="bietduoc" onclick="changeSearchCat(this)"><span class="item bietduoc">Biệt Dược</span> </div>
+
+                                <div rel="duoclieu" onclick="changeSearchCat(this)"><span class="item duoclieu">Dược Liệu</span> </div>
+                                <div rel="news" onclick="changeSearchCat(this)"><span class="item news">Tin tức</span> </div>
+                                <div rel="patientedu" onclick="changeSearchCat(this)"><span class="item patientedu">Giáo dục bệnh nhân</span> </div>
+
+
+                            </div>
+                            <div class="search-result" extra="yes" style="left: -10px; right: -80px;"></div>
+                        </div>
+                        <div class="clickable" style="position: absolute; right: 40px; width: 40px; height: 40px; top: 50%; margin-top: -20px;" onclick="$(this).parent().fadeOut('slow')">
+                            <svg enable-background="new 0 0 100 100" id="Layer_1" version="1.1" viewBox="0 0 100 100" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><polygon fill="#808080" points="77.6,21.1 49.6,49.2 21.5,21.1 19.6,23 47.6,51.1 19.6,79.2 21.5,81.1 49.6,53 77.6,81.1 79.6,79.2 51.5,51.1 79.6,23 "/></svg>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div style="display: none;text-align: center; font-size: 0.8em; background-color: #666; padding: 4px; box-shadow: inset 0 -1px 4px #333; font-weight: 400;">
+                <a href="/tuong_tac/"><span class="icon nav-interact" style="color: #eee;padding-top: 2px; margin-right: 8px;">Tương tác thuốc</span></a>
+                <a href="/giao_duc_benh_nhan/"><span class="icon doctor" style="color: #eee;padding-top: 2px;">Giáo dục bệnh nhân</span></a>
+            </div>
+
+
+            <div class="sub-head-menu dict homepage">
+                <div class="container">
+                    <h1 style="color: #fff; font-size: 30px;padding-top: 10px;">Nhanh chóng</h1>
+                    <div class="row">
+                        <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+                            <div class="search-wrapper" fire='gotoEntity(this)'>
+                                <span class="search">
+                    <span class="button category" onclick="openCategoryChoice(this)"></span>
+                                <input style="color: #222;" type="text" class="text-input" onkeydown="onSearchNavigate(event)" onkeyup="onSearch(this)" placeholder="Tìm kiếm nhanh ..." />
+                                <span class="button search" onclick="$(this).closest('.page-header').toggleClass('searching'); if ($(this).closest('.page-header').hasClass('searching')) {$(this).siblings('input').focus();}"></span>
+                                </span>
+                                <!--
+                -->
+                                <div class="category-select">
+                                    <div rel="all" onclick="changeSearchCat(this)"><span class="item all" style="color: #557;">All</span></div>
+
+                                    <div rel="bietduoc" onclick="changeSearchCat(this)"><span class="item bietduoc" style="color: #557;">Biệt Dược</span> </div>
+                                    <div rel="unii" onclick="changeSearchCat(this)"><span class="item hoatchat" style="color: #557;">Hoạt chất</span> </div>
+                                    <div rel="duoclieu" onclick="changeSearchCat(this)"><span class="item duoclieu" style="color: #557;">Dược Liệu</span> </div>
+                                    <div rel="doanhnghiep" onclick="changeSearchCat(this)"><span class="item doanhnghiep" style="color: #557;">Doanh Nghiệp</span> </div>
+                                    <div rel="news" onclick="changeSearchCat(this)"><span class="item news" style="color: #557;">Tin tức</span> </div>
+                                    <div rel="patientedu" onclick="changeSearchCat(this)"><span class="item patientedu" style="color: #557;">Giáo dục bệnh nhân</span> </div>
+
+                                </div>
+                                <div class="search-result" extra="yes" style="position: absolute; color: #444;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: #f8f8ff; opacity: 0.8;padding-top: 30px;padding-bottom: 0px;">Tra cứu nhanh tất cả các đối tượng từ bất kỳ nơi đâu trong hệ thống !</p>
+                    <p style="color: #fce; opacity: 0.6;padding-top: 0px;padding-bottom: 10px;">Hoặc sử dụng các trang tra cứu nâng cao để nâng cao mức độ chính xác.</p>
+
+                    <div class="container" style="padding-bottom: 20px;">
+                        <a href="/biet_duoc/"><span class="icon pills">Biệt dược</span></a>
+                        <a href="/hoat_chat/"><span class="icon test-tube">Hoạt chất</span></a>
+                        <a href="/duoc_lieu/"><span class="icon leaf">Dược Liệu</span></a>
+                        <a href="/doanh_nghiep/"><span class="icon shop">Doanh nghiệp</span></a>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="full-width-content gray ng-cloak">
+                <div class="container" ng-cloak>
+                    <h2 style="text-align: center; color: #444; padding-top: 0px; padding-bottom: 0;">Cập nhật</h2>
+                    <md-grid-list md-cols-lg="4" md-cols-md="4" md-cols-sm="2" md-cols-xs="1" md-cols="4" md-row-height="380px" md-gutter="8px" md-gutter-gt-sm="4px">
+
+                        <md-grid-tile md-colspan="1" md-rowspan="1">
+                            <md-card style="height: 360px; overflow: hidden; outline: none;" ng-click="openNews('cap-nhat-huong-dan-su-dung-khang-sinh-trong-cac-benh-nhiem-thong-thuong-cua-NICE-2019')" onclick="location.href='/tin_tuc/cap-nhat-huong-dan-su-dung-khang-sinh-trong-cac-benh-nhiem-thong-thuong-cua-NICE-2019.html'">
+                                <div class="md-card-image" style="height: 150px; overflow: hidden;">
+
+                                    <img class="md-card-image" ng-src="/public/uploads/Guidelinenhiemthongthuong-280419.png" />
+
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+
+                                    <div style="text-align: right; color: #999; font-size: 10px;">
+                                        <i class="fa fa-eye"></i> 40298
+                                    </div>
+
+                                </md-card-actions>
+                                <md-card-title style="padding-top: 0;">
+                                    <md-card-title-text>
+                                        <span class="title" style="font-weight: 500; font-size: 1.1;">NICE - Hướng dẫn sử dụng kháng sinh trong các bệnh nhiễm thông thường cập nhật 2019</span>
+                                        <span class="md-subhead"><p style="text-align: justify;"><em>Th&aacute;ng 2/2019, Viện Y Tế v&agrave; Chăm s&oacute;c sức khỏe Anh quốc (NICE) c&ocirc;ng bố bản t&oacute;m tắt hướng dẫn sử dụng kh&aacute;ng sinh trong thực h&agrave;nh l&acirc;m s&agrave;ng để quản l&yacute; c&aacute;c bệnh nhiễm th&ocirc;ng thường. </em></p></span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                            </md-card>
+
+                        </md-grid-tile>
+
+                        <md-grid-tile md-colspan="1" md-rowspan="1">
+                            <md-card style="height: 360px; overflow: hidden; outline: none;" ng-click="openNews('huong-dan-phong-ngua-tien-phat-bien-co-tim-mach-cua-accaha-2019')" onclick="location.href='/tin_tuc/huong-dan-phong-ngua-tien-phat-bien-co-tim-mach-cua-accaha-2019.html'">
+                                <div class="md-card-image" style="height: 150px; overflow: hidden;">
+
+                                    <img class="md-card-image" ng-src="/public/uploads/PNBCTMACC320192.png" />
+
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+
+                                    <div style="text-align: right; color: #999; font-size: 10px;">
+                                        <i class="fa fa-eye"></i> 18114
+                                    </div>
+
+                                </md-card-actions>
+                                <md-card-title style="padding-top: 0;">
+                                    <md-card-title-text>
+                                        <span class="title" style="font-weight: 500; font-size: 1.1;">Hướng dẫn dự phòng tiên phát biến cố tim mạch của ACC/AHA 2019</span>
+                                        <span class="md-subhead"><p>&nbsp;</p>
+<div id="eJOY__extension_root" style="all: unset;">&nbsp;</div></span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                            </md-card>
+
+                        </md-grid-tile>
+
+                        <md-grid-tile md-colspan="1" md-rowspan="1">
+                            <md-card style="height: 360px; overflow: hidden; outline: none;" ng-click="openNews('huong-dan-su-dung-thuoc-o-nguoi-cao-tuoi-theo-danh-sach-beers-2019')" onclick="location.href='/tin_tuc/huong-dan-su-dung-thuoc-o-nguoi-cao-tuoi-theo-danh-sach-beers-2019.html'">
+                                <div class="md-card-image" style="height: 150px; overflow: hidden;">
+
+                                    <img class="md-card-image" ng-src="/public/uploads/BEERLIST2019.png" />
+
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+
+                                    <div style="text-align: right; color: #999; font-size: 10px;">
+                                        <i class="fa fa-eye"></i> 6768
+                                    </div>
+
+                                </md-card-actions>
+                                <md-card-title style="padding-top: 0;">
+                                    <md-card-title-text>
+                                        <span class="title" style="font-weight: 500; font-size: 1.1;">Hướng dẫn sử dụng thuốc ở người cao tuổi theo Danh sách Beers 2019</span>
+                                        <span class="md-subhead"><p style="text-align: justify;"><em>Cuối th&aacute;ng 1/2019, Hiệp hội L&atilde;o khoa Hoa Kỳ (AGS) c&ocirc;ng bố bản cập nhật Danh s&aacute;ch Beers 2019 d&agrave;nh cho đối tượng người cao tuổi (từ 65 tuổi trở l&ecirc;n). Hướng dẫn n&agrave;y l&agrave; bản cập nhật của hướng dẫn năm 2015, dựa tr&ecirc;n qu&aacute; tr&igrave;nh tổng hợp v&agrave; đ&aacute;nh gi&aacute; y văn gồm 1422 b&agrave;i b&aacute;o. Hội đồng bi&ecirc;n soạn bao gồm 13 th&agrave;nh vi&ecirc;n trong đ&oacute; c&oacute; b&aacute;c sĩ, dược sĩ v&agrave; điều dưỡng.</em></p></span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                            </md-card>
+
+                        </md-grid-tile>
+
+                        <md-grid-tile md-colspan="1" md-rowspan="1">
+                            <md-card style="height: 360px; overflow: hidden; outline: none;" ng-click="openNews('rung-nhi-2019')" onclick="location.href='/tin_tuc/rung-nhi-2019.html'">
+                                <div class="md-card-image" style="height: 150px; overflow: hidden;">
+
+                                    <img class="md-card-image" ng-src="/public/uploads/AFibACCAHA2019.PNG" />
+
+                                </div>
+                                <md-card-actions layout="row" layout-align="end center">
+
+                                    <div style="text-align: right; color: #999; font-size: 10px;">
+                                        <i class="fa fa-eye"></i> 8831
+                                    </div>
+
+                                </md-card-actions>
+                                <md-card-title style="padding-top: 0;">
+                                    <md-card-title-text>
+                                        <span class="title" style="font-weight: 500; font-size: 1.1;">Điểm mới trong hướng dẫn quản lý rung nhĩ của ACC/AHA/HRS 2019</span>
+                                        <span class="md-subhead"><p style="text-align: justify;"><em>Đầu năm 2019, Trường ban Tim mạch Hoa Kỳ/Hiệp hội Tim Hoa Kỳ/Hội Nhịp Tim Hoa Kỳ (ACC/AHA/HRS) đ&atilde; c&ocirc;ng bố cập nhật hướng dẫn quản l&yacute; rung nhĩ. Đ&acirc;y l&agrave; hướng dẫn cập nhật c&aacute;c điểm ch&iacute;nh của hướng dẫn năm 2014, dựa tr&ecirc;n c&aacute;c dữ liệu mới li&ecirc;n quan đến c&aacute;c thuốc chống đ&ocirc;ng đường uống t&aacute;c động trực tiếp.Đ&acirc;y l&agrave; hướng dẫn cập nhật c&aacute;c điểm ch&iacute;nh của hướng dẫn năm 2014, dựa tr&ecirc;n c&aacute;c dữ liệu mới li&ecirc;n quan đến c&aacute;c thuốc chống đ&ocirc;ng đường uống t&aacute;c động trực tiếp.</em></p></span>
+                                    </md-card-title-text>
+                                </md-card-title>
+                            </md-card>
+
+                        </md-grid-tile>
+
+                    </md-grid-list>
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="container breadcrumbs">
+
+        </div>
+
+
+
+        <div class="container" style="margin-bottom: 20px;min-height: 200px;">
+
+            <!--<div class="text-center"  id="t3-intro-video" style="margin-right: auto; margin-left: auto; max-width: 980px;">
+        <iframe width="640" height="360" src="https://www.youtube.com/embed/FUsXXRraCDw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>-->
+            <h2 style="text-align: center; color: #444; padding-top: 0px; padding-bottom: 0;">Thuận tiện</h2>
+            <p class="instructions" style="text-align: center; color: #888;">Kiểm tra tương tác thuốc chính xác, nhanh chóng!</p>
+            <div style="font-size: 28px; text-align: center; padding: 0px 10px;"><span class="counter">31,722</span> Cặp tương tác</div>
+            <div class="row">
+                <div class="col-lg-4 col-lg-offset-2 col-md-5 col-md-offset-1 col-sm-6 col-sm-offset-0 col-xs-12 col-xs-offset-0">
+                    <h4 style="text-align: center;">Kiểm tra tương tác</h4>
+                    <div id="ttt_search" class="search-wrapper" doctype='unii,bietduoc' fire='ttt_add_hc(this); $.Event(event).stopPropagation();'>
+                        <span class="search small rounded">
+				      <span class="button category" onclick="openCategoryChoice(this)"></span>
+                        <input placeholder="Tên thuốc / hoạt chất ..." type="text" class="text-input" onkeydown="onSearchNavigate(event)" onkeyup="onSearch(this)" />
+                        </span>
+                        <div class="category-select">
+                            <div rel="unii,bietduoc" onclick="changeSearchCat(this)"><span class="item all">All</span></div>
+                            <div rel="bietduoc" onclick="changeSearchCat(this)"><span class="item bietduoc">Biệt Dược</span> </div>
+                            <div rel="unii" onclick="changeSearchCat(this)"><span class="item unii">Hoạt Chất</span> </div>
+                        </div>
+                    </div>
+                    <div class="reactor_list" style="margin-top:20px;"></div>
+                </div>
+                <div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
+                    <h4 style="text-align: center;">Thuốc dị ứng</h4>
+                    <div class="search-wrapper" main="ttt_diung" doctype='bietduoc,unii' fire="addSearchFilter($(this), null, $('.allergy_list'), true, false); $.Event(event).stopPropagation();">
+                        <span class="search small rounded">
+				      <span class="button category" onclick="openCategoryChoice(this)"></span>
+                        <input placeholder="Tên thuốc/hoạt chất ..." class="text-input" type="text" onkeydown="onSearchNavigate(event)" onkeyup="onSearch(this)" />
+                        </span>
+                        <div class="category-select">
+                            <div rel="unii,bietduoc" onclick="changeSearchCat(this)"><span class="item all">All</span></div>
+                            <div rel="bietduoc" onclick="changeSearchCat(this)"><span class="item bietduoc">Biệt Dược</span> </div>
+                            <div rel="unii" onclick="changeSearchCat(this)"><span class="item unii">Hoạt Chất</span> </div>
+                        </div>
+                    </div>
+                    <div class="allergy_list search-filter" style="margin-top:20px; margin-bottom: 20px;"></div>
+                </div>
+            </div>
+            <div class="row" style="padding-top: 30px; padding-bottom: 40px;">
+                <div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-10 col-xs-offset-1">
+                    <span class="button full-width black medium" onclick="goto_reaction()">Tra cứu</span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="full-width-content gray homepage" style="background-color: #f4f8fc; padding-bottom: 60px;">
+            <h2 style="text-align: center; color: #444; padding-top: 30px;">Phong phú</h2>
+            <div class="header" style="position: relative; font-size: 30px; color: #333; padding-top: 10px; text-align: center;">
+                <div style=" display: none;position: absolute; left: 0; right: 0; top: 50%; height: 4px; background-color: #eee; z-index: 0;"></div>
+                <div style="display: inline-block; padding: 10px; background-color: #f4f8fc;z-index: 100;"><span style="color: #933; font-size: 1.2em;">121,281</span> Sản phẩm</div>
+                <ul class="bxslider" maxSlides=4 slideWidth="320" finiteLoop="true">
+
+                    <li>
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/98038'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Pymepharco/Tatanol (vien nen dai)(1).jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Tatanol
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/VNC00186">Công ty Cổ phần Pymepharco</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/362O9ITL9D">ACETAMINOPHEN</a><span class="quantity">: 500  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/116987'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Pymepharco/COLDFLU Forte(1).jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                COLDFLU Forte
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/VNC00186">Công ty Cổ phần Pymepharco</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/362O9ITL9D">ACETAMINOPHEN</a><span class="quantity">: 500  mg</span> ;
+
+                                <a href="/unii/9D2RTI9KYH">DEXTROMETHORPHAN HYDROBROMIDE</a><span class="quantity">: 15  mg</span> ;
+
+                                <a href="/unii/7AJO3BO7QN">LORATADINE</a><span class="quantity">: 5  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/116983'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Pymepharco/ROSTOR10-20(1).jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                ROSTOR 20mg
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/VNC00186">Công ty Cổ phần Pymepharco</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/413KH5ZJ73">ROSUVASTATIN</a><span class="quantity">: 20  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/116984'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Pymepharco/PymeDIAPRO MR(1).jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Pyme DIAPRO MR
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/VNC00186">Công ty Cổ phần Pymepharco</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/G4PX8C4HKV">GLICLAZIDE</a><span class="quantity">: 30  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/116988'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Imexpharm/bactamox.png" />
+
+                            </div>
+
+
+                            <div class="title">
+                                pms-BACTAMOX 1g
+                            </div>
+
+                            <div class="subtitle">
+
+
+
+                                <a href="#"><span class="subtitle">
+                    Vỉ
+                , </span></a>
+
+
+
+
+                                <a href="/doanh_nghiep/VNC00130">Công ty Cổ phần dược phẩm IMEXPHARM</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/804826J2HU">AMOXICILLIN</a><span class="quantity">: 875  mg</span> ;
+
+                                <a href="/unii/S4TF6I2330">SULBACTAM</a><span class="quantity">: 125  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/82788'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Imexpharm/pms claminat 625.png" />
+
+                            </div>
+
+
+                            <div class="title">
+                                pms - Claminat 625 mg
+                            </div>
+
+                            <div class="subtitle">
+
+
+
+                                <a href="#"><span class="subtitle">
+                    Vỉ
+                , </span></a>
+
+
+
+
+                                <a href="/doanh_nghiep/VNC00130">Công ty Cổ phần dược phẩm IMEXPHARM</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/804826J2HU">AMOXICILLIN</a><span class="quantity">: 500  mg</span> ;
+
+                                <a href="/unii/23521W1S24">CLAVULANIC ACID</a><span class="quantity">: 125  mg</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/102178'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Imexpharm/Zobacta UL hop va chai.png" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Zobacta_UL 4,5g
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/VNC00130">Công ty Cổ phần dược phẩm IMEXPHARM</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/M98T69Q7HP">PIPERACILLIN SODIUM</a><span class="quantity">: 4  g</span> ;
+
+                                <a href="/unii/UXA545ABTT">TAZOBACTAM SODIUM</a><span class="quantity">: 0.5  g</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/76800'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="/uploads/bietduoc/Imexpharm/pms Probio.png" />
+
+                            </div>
+
+
+                            <div class="title">
+                                pms-Probio
+                            </div>
+
+                            <div class="subtitle">
+
+
+
+                                <a href="#"><span class="subtitle">
+                    Gói
+                , </span></a>
+
+
+
+
+                                <a href="/doanh_nghiep/VNC00130">Công ty Cổ phần dược phẩm IMEXPHARM</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/1PRR1V42V5">LACTOBACILLUS ACIDOPHILUS</a><span class="quantity">: 1  tỷ vi khuẩn sống</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/2895'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/bietduoc/0078-0491.jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Exforge
+                            </div>
+
+                            <div class="subtitle">
+
+
+                                <a href="/doanh_nghiep/0078">Novartis Pharmaceuticals Corporation</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/864V2Q084H">AMLODIPINE BESYLATE</a><span class="quantity">: 10  mg/1</span> ;
+
+                                <a href="/unii/80M03YXJ7I">VALSARTAN</a><span class="quantity">: 320  mg/1</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                        <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/518'">
+
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/bietduoc/VD-12192-10/hop-vi_thumb.jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Ziber
+                            </div>
+
+                            <div class="subtitle">
+
+
+
+                                <a href="#"><span class="subtitle">
+                    Vỉ
+                , </span></a>
+
+
+
+
+                                <a href="/doanh_nghiep/VNC00111A">Công ty cổ phần Dược phẩm 3/2.</a>
+
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/unii/SAS9Z1SVUK">GINGER OIL</a><span class="quantity">
+            
+        
+    
+    </div>
+
+        
+        
+
+			    </div>
+			</li>
+			
+			<li>
+                <div style="width: 300px; margin: 10px; padding-bottom: 8px; min-height: 310px;" class="tile clickable bietduoc contained" onclick="window.location.href='/biet_duoc/5209'">
+				    
+
+    
+        
+            <div class="thumbnail">
+                
+                  <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/bietduoc/0186-5022.jpg"  />
+                
+            </div>
+        
+    
+    <div class="title">
+        NEXIUM
+    </div>
+
+    <div class="subtitle">
+        
+        
+            <a href="/doanh_nghiep/0186">AstraZeneca LP</a>
+        
+    </div>
+    <div class="composition">
+    
+        
+            <a href="/unii/R6DXU4WAY9">ESOMEPRAZOLE MAGNESIUM</a><span class="quantity">: 20.0  mg/1</span>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+                </ul>
+            </div>
+
+            <div class="header" style="position: relative; font-size: 30px; color: #333; padding-top: 30px; text-align: center;">
+                <div style=" display: none;position: absolute; left: 0; right: 0; top: 50%; height: 4px; background-color: #eee; z-index: 0;"></div>
+                <div style="display: inline-block; padding: 10px; background-color: #f4f8fc;z-index: 100;"><span class="counter">2,033</span> Hoạt chất</div>
+                <ul class="bxslider" slideWidth="320" maxSlides=4 finiteLoop="true">
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/362O9ITL9D'">
+
+                            <div class="title">
+                                ACETAMINOPHEN
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">5141</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=362O9ITL9D">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Acetaminophen.png" />
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="text-align: left; padding-left: 8px;">
+                                <span style="font-size: 0.8em; color: #e99;">Featured:</span> <a href="/biet_duoc/98038/">Tatanol</a>
+                                <!--
+            -->, <a style="font-size: 0.9em; color: #999;" href="/doanh_nghiep/VNC00186">
+                    Pymepharco
+                </a>
+
+                            </div>
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/362O9ITL9D/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/362O9ITL9D?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/362O9ITL9D/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/362O9ITL9D?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/804826J2HU'">
+
+                            <div class="title">
+                                AMOXICILLIN
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">925</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=804826J2HU">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Amoxicillin.png" />
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="text-align: left; padding-left: 8px;">
+                                <span style="font-size: 0.8em; color: #e99;">Featured:</span> <a href="/biet_duoc/76713/">Ospamox 250mg</a>
+                                <!--
+            -->, <a style="font-size: 0.9em; color: #999;" href="/doanh_nghiep/VNC00130">
+                    Dược phẩm IMEXPHARM
+                </a>
+
+                            </div>
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/804826J2HU/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/804826J2HU?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/804826J2HU/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/804826J2HU?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/A0JWA85V8F'">
+
+                            <div class="title">
+                                ATORVASTATIN
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">517</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=A0JWA85V8F">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Atorvastatin.png" />
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="text-align: left; padding-left: 8px;">
+                                <span style="font-size: 0.8em; color: #e99;">Featured:</span> <a href="/biet_duoc/81235/">Atorvis 10</a>
+                                <!--
+            -->, <a style="font-size: 0.9em; color: #999;" href="/doanh_nghiep/VNC00130">
+                    Dược phẩm IMEXPHARM
+                </a>
+
+                            </div>
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/A0JWA85V8F/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/A0JWA85V8F?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/A0JWA85V8F/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/A0JWA85V8F?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/A74586SNO7'">
+
+                            <div class="title">
+                                CLOPIDOGREL
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">239</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=A74586SNO7">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Clopidogrel.png" />
+                                </div>
+                            </div>
+
+
+
+
+                            <div style="text-align: left; padding-left: 8px;">
+                                <span style="font-size: 0.8em; color: #e99;">Featured:</span> <a href="/biet_duoc/81426/">Pidocar</a>
+                                <!--
+            -->, <a style="font-size: 0.9em; color: #999;" href="/doanh_nghiep/VNC00186">
+                    Pymepharco
+                </a>
+
+                            </div>
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/A74586SNO7/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/A74586SNO7?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/A74586SNO7/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/A74586SNO7?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/5FD1131I7S'">
+
+                            <div class="title">
+                                AZITHROMYCIN DIHYDRATE
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">136</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=5FD1131I7S">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/hoatchat/Azithromycin-dihydrate.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/5FD1131I7S/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/5FD1131I7S?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/5FD1131I7S/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/5FD1131I7S?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/N3PA6559FT'">
+
+                            <div class="title">
+                                ESOMEPRAZOLE
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Esomeprazole.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/N3PA6559FT/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/N3PA6559FT?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/N3PA6559FT/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/N3PA6559FT?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/0J48LPH2TH'">
+
+                            <div class="title">
+                                HYDROCHLOROTHIAZIDE
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">1029</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=0J48LPH2TH">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Hydrochlorothiazide.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/0J48LPH2TH/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/0J48LPH2TH?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/0J48LPH2TH/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/0J48LPH2TH?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/Q51BO43MG4'">
+
+                            <div class="title">
+                                LEVOTHYROXINE
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">443</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=Q51BO43MG4">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/levothyroxine.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/Q51BO43MG4/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/Q51BO43MG4?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/Q51BO43MG4/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/Q51BO43MG4?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/E7199S1YWR'">
+
+                            <div class="title">
+                                LISINOPRIL
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">577</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=E7199S1YWR">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/Lisinopril.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/E7199S1YWR/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/E7199S1YWR?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/E7199S1YWR/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/E7199S1YWR?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/9100L32L2N'">
+
+                            <div class="title">
+                                METFORMIN
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">651</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=9100L32L2N">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/metformin.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/9100L32L2N/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/9100L32L2N?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/9100L32L2N/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/9100L32L2N?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable hoatchat" onclick="window.location.href='/hoat_chat/GEB06NHM23'">
+
+                            <div class="title">
+                                METOPROLOL
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <div class="gauge">
+
+                                        <div class="indicator">355</div>
+                                        <div class="sub-title"><a href="/biet_duoc/?ingredients=GEB06NHM23">Biệt Dược <img width="16" height="16" src="/static/images/icons/circle_arrow_next.svg"></a></div>
+
+
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <img style="max-height: 80px;" src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/hoatchat/metoprolol.png" />
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="quick-links" style="padding: 4px 30px 2px; border-top: solid 1px #f4f4f4; background-color: #fcfcfc;">
+                                <div class="row">
+                                    <div class="col-xs-6"><a style="color: #686;" href="/hoat_chat/GEB06NHM23/#chi_dinh">Chỉ định</a></div>
+                                    <div class="col-xs-6" style="text-align: right;"><a style="color: #666;" href="/hoat_chat/GEB06NHM23?tab=tuong_tac">Tương tác</a></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-7"><a style="color: #866;" href="/hoat_chat/GEB06NHM23/#chong_chi_dinh">Chống chỉ định</a></div>
+                                    <div class="col-xs-5" style="text-align: right;"><a style="color: #668;" href="/hoat_chat/GEB06NHM23?tab=tu_van">Tư vấn</a></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="header" style="position: relative; font-size: 30px; color: #333; padding-top: 10px; text-align: center;">
+                <div style=" display: none;position: absolute; left: 0; right: 0; top: 50%; height: 4px; background-color: #eee; z-index: 0;"></div>
+                <div style="display: inline-block; padding: 10px; background-color: #f4f8fc;z-index: 100;"><span class="counter">4,505</span> Dược Liệu</div>
+                <ul class="bxslider" maxSlides=4 slideWidth="320" finiteLoop="true">
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/1908'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/bach_qua.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Bạch quả
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/hoat_chat/73WRA8Z8M8">TAMARIXETIN</a> ;
+
+                                <a href="/hoat_chat/731P2LE49E">KAEMPFEROL</a> ;
+
+                                <a href="/hoat_chat/9IKM0I5T1E">QUERCETIN</a> ;
+
+                                <a href="/hoat_chat/ZTG9LSS5QH">FLAVONOL</a> ;
+
+                                <a href="/hoat_chat/IY9XDZ35W2">DEXTROSE</a>
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/3261'">
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/3261/cat_canh_thumb.jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Cát cánh
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/2158'">
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/2158/diep_ca_thumb.jpeg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Diếp cá
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/3539'">
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/3539/dai_hoang_thumb.jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Đại hoàng
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/3074'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/lac_tien.JPG" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Lạc tiên
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/3405'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/Mo.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Mơ
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/hoat_chat/6HN2PC637T">ISOQUERCETIN</a> ;
+
+                                <a href="/hoat_chat/9IKM0I5T1E">QUERCETIN</a> ;
+
+                                <a href="/hoat_chat/214UUQ9N0H">AMYGDALIN</a> ;
+
+                                <a href="/hoat_chat/H4N855PNZ1">.ALPHA.-TOCOPHEROL</a>
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/2802'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/Muop_Dang.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Mướp đắng
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/hoat_chat/H4N855PNZ1">.ALPHA.-TOCOPHEROL</a> ;
+
+                                <a href="/hoat_chat/3SCV180C9W">BETAINE</a> ;
+
+                                <a href="/hoat_chat/JAC85A2161">ADENINE</a>
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/1261'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="http://images.baithuocquy.com/Upload/Article/2014/10/kg7ayy728mpkmku9m4gd-cay-nghe-vang.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Nghệ
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/hoat_chat/8XOC63EI5F">ZINGIBERENE</a> ;
+
+                                <a href="/hoat_chat/IT942ZTH98">CURCUMIN</a>
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/4503'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://yduoc-media.s3.amazonaws.com/duoclieu/4503-2872.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Nhân sâm
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/876'">
+
+
+
+
+
+
+                            <div class="thumbnail">
+                                <div class="thumbnail">
+
+                                    <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="http://plants.usda.gov/gallery/standard/ceas_002_shp.jpg" />
+
+
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="title">
+                                Rau má
+                            </div>
+                            <div class="composition">
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable bietduoc" onclick="window.location.href='/duoc_lieu/1087'">
+
+
+
+                            <div class="thumbnail">
+
+                                <img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/animated_slow-32.gif" data-src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/duoclieu/1087/y_di_thumb.jpg" />
+
+                            </div>
+
+
+                            <div class="title">
+                                Ý dĩ
+                            </div>
+                            <div class="composition">
+
+
+                                <a href="/hoat_chat/3KX376GY7L">GLUTAMIC ACID</a> ;
+
+                                <a href="/hoat_chat/5L5O665639">CAMPESTEROL</a> ;
+
+                                <a href="/hoat_chat/G7V636VTDY">SITOSTEROLS</a> ;
+
+                                <a href="/hoat_chat/4QD397987E">HISTIDINE</a> ;
+
+                                <a href="/hoat_chat/42HK56048U">TYROSINE</a>
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+            <div class="header" style="position: relative; font-size: 30px; color: #333; padding-top: 10px; text-align: center;">
+                <div style=" display: none;position: absolute; left: 0; right: 0; top: 50%; height: 4px; background-color: #eee; z-index: 0;"></div>
+                <div style="display: inline-block; padding: 10px; background-color: #f4f8fc;z-index: 100;"><span class="counter">15,259</span> Doanh Nghiệp</div>
+
+                <ul class="bxslider" maxSlides=4 slideWidth="320" finiteLoop="true">
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/ladophar/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">Công ty Cổ phần Dược Lâm Đồng - Ladophar</div>
+
+
+                            <div class="thumbnail">
+
+                                <img src="http://static.tinnhanhchungkhoan.vn/Uploaded/NgocTuanz/2014_07_29/92_HFVP.jpg" />
+
+                            </div>
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00006/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Thiên Ân</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh6.googleusercontent.com/-A1sKzVrJH3k/VKjgS-_NjCI/AAAAAAAAByw/DxfgA2Ym6qg/w731-h487-no/140615_203704__MG_5298-2048px.jpg" />
+
+
+                                <div class="caption">dược sĩ tư vấn: Trịnh Nguyên Tuyền</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00004/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">Nhà thuốc Minh Quân</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh3.googleusercontent.com/-JL8NNytTQLs/VKZkVBDt15I/AAAAAAAABhs/aOeUj971ee8/w731-h487-no/140615_172212__MG_5075-2048px.jpg" />
+
+
+                                <div class="caption">dược sĩ tư vấn: Đỗ Quốc Đại</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00003/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">Nhà thuốc Phú Định An</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh5.googleusercontent.com/-0NVyASQ1HyY/VKZfDAORa9I/AAAAAAAABgs/D3wxpC6SzJo/w731-h487-no/140615_163022__MG_5006-2048px.jpg" />
+
+
+                                <div class="caption">dược sĩ tư vấn: Phạm Quang Trúc Thủy</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00012/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Thanh Hà</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh4.googleusercontent.com/-CS_MPo99hGk/VKZ0awlTnPI/AAAAAAAABmI/8YvnF4ptlAA/w731-h487-no/140827_103101__MG_3563_fb.jpg" />
+
+
+                                <div class="caption">mặt tiền nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00013/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Khắc Minh 1</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh4.googleusercontent.com/-NGIga3QQeDA/VKZ2wIyOheI/AAAAAAAABms/BRCxuz8lJSM/w731-h487-no/140831_152726__MG_3817_fb.jpg" />
+
+
+                                <div class="caption">không gian gần nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00011/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Quỳnh Liên</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh3.googleusercontent.com/-SatbWi6_88g/U_yaZek4a9I/AAAAAAAABBE/X6M0I2y-xbw/w731-h487-no/140824_174152__MG_3308_fb.jpg" />
+
+
+                                <div class="caption">mặt tiền nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00010/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Minh Đức 5</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh3.googleusercontent.com/-yHJkuZjMvoU/U_ydqgU1qSI/AAAAAAAABEU/_vQr7C5JiXo/w731-h487-no/140824_123026__MG_3262_fb.jpg" />
+
+
+                                <div class="caption">bên ngoài nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00009/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Minh Đức 8</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh5.googleusercontent.com/KWDdi2ccLIblIrw36EtmRKzzAFYQmg55DD0JhJBDvJw=w731-h487-no" />
+
+
+                                <div class="caption">nhân viên nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00007/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Khang Phát - Lữ Gia</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh4.googleusercontent.com/-FYME9vPJE4I/VKZpjg-p4eI/AAAAAAAABjs/y5RXQlhIVb8/w325-h487-no/140709_152948__MG_5725-full.jpg" />
+
+
+                                <div class="caption">hình mặt tiền nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <div style="width: 300px; margin: 10px;" class="tile clickable doanhnghiep" onclick="window.location.href='/doanh-nghiep/NT00008/'">
+                            <div class="title" style="min-height: 60px; vertical-align: middle;">nhà thuốc Khang Phát - Độc Lập</div>
+
+
+
+
+
+
+
+                            <div class="thumbnail">
+
+
+                                <img src="https://lh4.googleusercontent.com/ucSTL_9TcSI4T4t9BiBMRluMiI8FKrCqmfcRouDOrj8=w730-h487-no" />
+
+
+                                <div class="caption">mặt tiền nhà thuốc</div>
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="full-width-content" style="padding-bottom: 60px;">
+            <div class="container">
+                <h2 style="text-align: center; color: #444; padding-top: 20px;">Chuyên nghiệp</h2>
+                <div style="color: #666; padding-top: 30px;padding-bottom: 0px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Nội dung được xây dựng bởi đội ngũ cộng tác viên chuyên nghiệp là các Chuyên gia, Tiến sĩ, Thạc sĩ, Dược sĩ, Bác sĩ trong lĩnh vực chuyên môn y tế đang làm việc tại các Viện Nghiên cứu, Trường Đại học, Bệnh viện, Công ty, Nhà máy trong và ngoài nước.
+                </div>
+                <div class="team" style="display: none;">
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/team/PVN.jpg" />
+			</span>
+                        <span class="name"><span class="title">TS.</span> PV Nguyên</span>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/team/NTNN.jpg" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> NTN Nguyệt</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> NTT Trang</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> LVH Yến</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> NH Nam</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> NT Xuân</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> LTH Vân</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> ĐT Dân</div>
+                    </div>
+                    <div class="member">
+                        <span class="avatar">
+				<img src="https://yduoc-media.s3-ap-southeast-1.amazonaws.com/static/images/icons/avtar_white_64.png" />
+			</span>
+                        <div class="name"><span class="title">DS.</span> TTQ Ngọc</div>
+                    </div>
+                </div>
+                <div style="color: #666; padding-top: 20px;padding-bottom: 0px; text-align: center; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Dữ liệu được cập nhật liên từ các nguồn thông tin, tài liệu có uy tín trong và ngoài nước.
+                </div>
+                <div class="sponsors" style="text-align: center; padding-top: 20px; max-width: 800px; margin-left: auto; margin-right: auto; display: none;">
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 128px; overflow: hidden;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/FDA.png" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 190px; overflow: hidden;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/who.jpeg" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 200px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/whocc-logo_2.gif" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 90px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/USDA.jpeg" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 113px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/moh.jpeg" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 110px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/AHFS.png" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 110px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/lexicomp-logo.gif" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 110px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/diadr.jpg" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                    <div class="sponsor" style="display: inline-block; margin: 10px;">
+                        <span style="display: inline-block; width: 150px; overflow: hidden; background-color: #aba099;">
+				<img src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/images/sources/MDXheaderLogoLG.png" />
+			</span>
+                        <div class="title"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div id="page-footer" class="hidden-print">
+            <div class="container" style="position: relative;">
+                <div class="hidden-xs" style="position: absolute; right: 0; top: 50%; margin-top: -14px; color: #666;" id="active-user-count"></div>
+                <ul>
+                    <li><a href="/about">About</a></li>
+                    <li>Contact</li>
+                    <li>FAQ</li>
+                </ul>
+                <div style="text-align: center; color: #888; font-size: 0.8em;">
+                    &copy; <span class="hidden-xs">Bản quyền </span>thongtinthuoc.com. Liên hệ thongtinthuoc.com@gmail.com</div>
+            </div>
+        </div>
+
+        <div class="hidden-xs" style="position: fixed; left: 0; top: 50%; padding-left: 4px; margin-top: -50px;">
+            <div class="fb-like" data-href="https://thongtinthuoc.com" data-layout="box_count" data-action="like" data-show-faces="true" data-share="true"></div>
+        </div>
+
+        <div class="modal prescription">
+            <div onclick="$(this).closest('.modal').animate({right: '-400px'});" class="close-button">Đóng</div>
+            <h4>Đơn thuốc</h4>
+            <div class="prescription-list">
+            </div>
+            <div style="margin-top: 10px;margin-bottom: 10px;"><span class="button black full-width" onclick="cookie_clearSaved()">Xoá đơn thuốc</span></div>
+            <div style="margin-top: 10px;margin-bottom: 10px;"><span class="button blue full-width" onclick="cookie_check_interaction()">Kiểm tra đơn thuốc</span></div>
+        </div>
+
+
+        <script type="text/javascript" src="https://use.fontawesome.com/e3a40b3780.js"></script>
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+
+        <script type="text/javascript" src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+        <script type="text/javascript" src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/js/moment.min.js"></script>
+
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="/static/js/yduoc.js"></script>
+
+        <script type="text/javascript" src="https://s3-ap-southeast-1.amazonaws.com/yduoc-media/static/js/common_160510.min.js"></script>
+
+
+        <script type="text/javascript">
+            var root_url = '';
+            var root_api_url = '/api/v1/';
+            var alt_api_url = '/api/v2/';
+
+            $(document).ready(function() {
+                $("img").unveil(200, function() {
+                    $(this).load(function() {
+                        var h = 90 - 150 * this.height / this.width;
+                        if (h > 10) {
+                            this.style.paddingTop = Math.round(h) + 'px';
+                        }
+                    });
+                });
+            });
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] || function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-60026705-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+
+        <script type="text/javascript" src="/static/js/jquery.fitvids.min.js"></script>
+        <script>
+            $("#t3-intro-video").fitVids();
+        </script>
+
+    </div>
+</body>
+
+</html>
